@@ -1,8 +1,8 @@
 import asyncio
-from playwright.async_api import async_playwright
+from playwright.async_api import Playwright, async_playwright
 
 
-async def run(playwright, url):
+async def run(playwright: Playwright, url: str):
     # Launch Chromium in non-headless mode (visible UI)
     browser = await playwright.chromium.launch(headless=False)
 
@@ -16,7 +16,7 @@ async def run(playwright, url):
     await asyncio.sleep(3)  # Wait for 3 seconds
 
     # Take a screenshot
-    await page.screenshot(path="visible_part.png")
+    await page.screenshot(path="visible_part.png", full_page=True)
 
     # Close the browser
     await browser.close()
@@ -25,7 +25,7 @@ async def run(playwright, url):
 async def main():
     # Use async_playwright to manage the Playwright instance
     async with async_playwright() as playwright:
-        await run(playwright, url="https://scrapingant.com/")
+        await run(playwright, url="https://playwright.dev/")
 
 
 if __name__ == "__main__":
